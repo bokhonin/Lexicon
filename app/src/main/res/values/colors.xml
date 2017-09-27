@@ -4,9 +4,14 @@
     <color name="colorPrimaryDark_">#303F9F</color>
     <color name="colorAccent_">#FF4081</color>
 
-    <color name="colorPrimary">#546e7a</color>
-    <color name="colorPrimaryDark">#29434e</color>
-    <color name="colorAccent">#819ca9</color>
+    <color name="colorPrimary1">#546e7a</color>
+    <color name="colorPrimaryDark1">#29434e</color>
+    <color name="colorAccent1">#819ca9</color>
+
+    <color name="colorPrimary">#0277bd</color>
+    <color name="colorPrimaryDark">#004c8c</color>
+    <color name="colorPrimaryLight">#58a5f0</color>
+    <color name="colorAccent">#ffa726</color>
 
     <color name="colorTransparentWhite">#52FFFFFF</color>
     <color name="colorTransparentBlack">#52000000</color>

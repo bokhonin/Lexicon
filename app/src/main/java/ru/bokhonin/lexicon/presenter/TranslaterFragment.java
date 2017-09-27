@@ -1,6 +1,7 @@
 package ru.bokhonin.lexicon.presenter;
 
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -8,12 +9,15 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import ru.bokhonin.lexicon.R;
+import ru.bokhonin.lexicon.model.TranslationWord;
+import ru.bokhonin.lexicon.model.Vocabulary;
 import ru.bokhonin.lexicon.utils.Translater;
 
 import java.io.IOException;
@@ -47,6 +51,14 @@ public class TranslaterFragment extends Fragment {
                 String sourceWord = textView.getText().toString();
                 new GetTranslateTask().execute(sourceWord);
 
+//                textView.setFocusable(false);
+
+//                InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+//                imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
+
+                InputMethodManager inputManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                inputManager.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+
 //                Toast.makeText(getActivity(), ARG_SECTION_NUMBER, Toast.LENGTH_SHORT).show();
             }
         });
@@ -71,11 +83,23 @@ public class TranslaterFragment extends Fragment {
         mBookmarkButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ImageView imageView = (ImageView)getActivity().findViewById(R.id.btn_bookmark);
-                imageView.setImageResource(R.mipmap.ic_bookmark);
-
                 TextView textView = (TextView)getActivity().findViewById(R.id.source_word);
                 String sourceWord = textView.getText().toString();
+
+                TextView textView2 = (TextView)getActivity().findViewById(R.id.translated_word);
+                String tranlatedWord = textView2.getText().toString();
+
+                if ((sourceWord.isEmpty() == true) || (tranlatedWord.isEmpty() == true)) {
+                    Toast.makeText(getActivity(), "Не выбрано слово!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                Vocabulary vocab = Vocabulary.get();
+                vocab.addTranslationWord(new TranslationWord(sourceWord, tranlatedWord));
+
+
+                ImageView imageView = (ImageView)getActivity().findViewById(R.id.btn_bookmark);
+                imageView.setImageResource(R.mipmap.ic_bookmark);
 
                 Toast.makeText(getActivity(), sourceWord + " добавлено в словарь", Toast.LENGTH_SHORT).show();
             }

@@ -34,4 +34,8 @@ public class Vocabulary {
     public List<TranslationWord> getVocabulary() {
         return mTranslationWords;
     }
+
+    public void addTranslationWord(TranslationWord translationWord) {
+        mTranslationWords.add(translationWord);
+    }
 }

@@ -15,6 +15,13 @@ public class TranslationWord {
         mDateUpload = new Date();
     }
 
+    public TranslationWord(String enWord, String ruWord) {
+        mUUID = UUID.randomUUID();
+        mDateUpload = new Date();
+        mEnWord = enWord;
+        mRuWord = ruWord;
+    }
+
     public UUID getUUID() {
         return mUUID;
     }
