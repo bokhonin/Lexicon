@@ -15,4 +15,7 @@
 
     <color name="colorTransparentWhite">#52FFFFFF</color>
     <color name="colorTransparentBlack">#52000000</color>
+
+    <color name="border_color">#52000000</color>
+    <color name="background_color">#52FFFFFF</color>
 </resources>

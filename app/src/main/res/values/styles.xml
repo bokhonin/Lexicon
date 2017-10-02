@@ -34,19 +34,20 @@
         <item name="android:alpha">.54</item>
         <!-- <item name="android:layout_marginLeft">4dp</item>-->
         <!-- <item name="android:layout_marginTop">16dp</item>-->
-</style>
+    </style>
 
-<style name="TranslatedWord">
-    <item name="android:textSize">28sp</item>
-    <item name="android:gravity">center_vertical|center_horizontal</item>
-    <!-- <item name="android:padding">4dp</item>-->
-</style>
+    <style name="TranslatedWord">
+        <item name="android:textSize">28sp</item>
+        <item name="android:gravity">center_vertical|center_horizontal</item>
+        <item name="android:background">@drawable/my_border</item>
+        <!-- <item name="android:padding">4dp</item>-->
+    </style>
 
 
-<!-- Button -->
+    <!-- Button -->
     <style name="ImageButtonAdd" parent="Base.Widget.AppCompat.ImageButton">
-        <item name="android:alpha">.30</item>
-        <item name="android:background">@drawable/button_display</item>
+        <item name="android:alpha">.90</item>
+        <!--<item name="android:background">@drawable/button_display</item>-->
         <item name="android:layout_marginTop">32dp</item>
     </style>
 

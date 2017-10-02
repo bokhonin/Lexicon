@@ -34,6 +34,9 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState)  {
+
+//        Toast.makeText(this, "onCreate - MainActivity", Toast.LENGTH_SHORT).show();
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -63,17 +66,17 @@ public class MainActivity extends AppCompatActivity {
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
+//                Toast.makeText(MainActivity.this, "onPageScrolled", Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onPageSelected(int position) {
-//                Toast.makeText(HomeActivity.this, position, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(MainActivity.this, "onPageSelected", Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onPageScrollStateChanged(int state) {
-
+//                Toast.makeText(MainActivity.this, "onPageScrollStateChanged", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -119,9 +122,9 @@ public class MainActivity extends AppCompatActivity {
             switch (position) {
                 case 0:
                     return TranslaterFragment.newInstance(position);
-                case 1:
-                    return VocabularyFragment.newInstance(position);
                 case 2:
+                    return VocabularyFragment.newInstance(position);
+                case 1:
                     return HistoryFragment.newInstance(position);
                 default:
                     return null;
@@ -141,10 +144,11 @@ public class MainActivity extends AppCompatActivity {
             switch (position) {
                 case 0:
                     return "Переводчик";
-                case 1:
-                    return "Словарь";
+//                    return getString(R.string...);
                 case 2:
-                    return "История";
+                    return "Словарь";
+                case 1:
+                    return "Тренировка";
             }
             return null;
         }

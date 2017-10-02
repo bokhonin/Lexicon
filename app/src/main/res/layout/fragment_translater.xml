@@ -38,30 +38,34 @@
             android:layout_height="0dp"
             tools:layout_constraintRight_creator="1"
             app:layout_constraintRight_toRightOf="parent"
-            android:layout_marginRight="12dp" app:layout_constraintDimensionRatio="h,2:1"
-            app:layout_constraintTop_toTopOf="parent" android:layout_marginTop="24dp" android:layout_marginEnd="8dp"/>
+            android:layout_marginRight="12dp"
+            app:layout_constraintDimensionRatio="h,2:1"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="8dp"/>
 
 
     <TextView
             style="@style/TranslatedWord"
             android:id="@+id/translated_word"
-            android:text=""
             android:layout_width="0dp"
             android:layout_height="96dp"
             tools:layout_constraintTop_creator="1"
             android:layout_marginTop="8dp"
             app:layout_constraintTop_toBottomOf="@+id/source_word"
             app:layout_constraintLeft_toLeftOf="@+id/source_word"
-            android:layout_marginLeft="0dp" app:layout_constraintRight_toLeftOf="@+id/btn_bookmark"
-            android:layout_marginRight="8dp"/>
+            android:layout_marginLeft="0dp"
+            android:layout_marginRight="8dp"
+            app:layout_constraintRight_toRightOf="parent"
+            />
     <ImageButton
             style="@style/ImageButtonAdd"
-            android:layout_width="32dp"
+            android:layout_width="24dp"
             android:layout_height="32dp"
             app:srcCompat="@mipmap/ic_bookmark_border"
             android:id="@+id/btn_bookmark"
-            android:layout_marginRight="8dp"
-            app:layout_constraintRight_toRightOf="parent" android:layout_marginTop="8dp"
+            android:layout_marginRight="16dp"
+            app:layout_constraintRight_toRightOf="parent" android:layout_marginTop="6dp"
             app:layout_constraintTop_toBottomOf="@+id/btn_translate"/>
 
 

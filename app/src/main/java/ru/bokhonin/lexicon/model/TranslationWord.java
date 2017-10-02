@@ -5,25 +5,29 @@ import java.util.UUID;
 
 public class TranslationWord {
 
-    private UUID mUUID;
+    private UUID mId;
     private String mEnWord;
     private String mRuWord;
     private Date mDateUpload;
 
     public TranslationWord() {
-        mUUID = UUID.randomUUID();
+        this(UUID.randomUUID());
+    }
+
+    public TranslationWord(UUID id) {
+        mId = id;
         mDateUpload = new Date();
     }
 
     public TranslationWord(String enWord, String ruWord) {
-        mUUID = UUID.randomUUID();
+        mId = UUID.randomUUID();
         mDateUpload = new Date();
         mEnWord = enWord;
         mRuWord = ruWord;
     }
 
     public UUID getUUID() {
-        return mUUID;
+        return mId;
     }
 
     public String getEnWord() {
@@ -36,6 +40,10 @@ public class TranslationWord {
 
     public Date getDateUpload() {
         return mDateUpload;
+    }
+
+    public void setDateUpload(Date dateUpload) {
+        mDateUpload = dateUpload;
     }
 
     public void setEnWord(String enWord) {
