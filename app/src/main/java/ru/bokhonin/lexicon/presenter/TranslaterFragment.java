@@ -10,11 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
-import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.*;
 import ru.bokhonin.lexicon.R;
 import ru.bokhonin.lexicon.model.TranslationWord;
 import ru.bokhonin.lexicon.model.Vocabulary;
@@ -32,8 +28,9 @@ public class TranslaterFragment extends Fragment {
      */
 //    private static final String ARG_SECTION_NUMBER = "section_number";
 
-    private TextView sourceWordTextView;
-    private TextView translatedWordTextView;
+    private EditText sourceWordTextView;
+    private EditText translatedWordTextView;
+    private ImageButton mBookmarkButton;
 
     public TranslaterFragment() {
         // Required empty public constructor
@@ -47,10 +44,12 @@ public class TranslaterFragment extends Fragment {
 //        Toast.makeText(getActivity(), "onCreateView - TranslaterFragment", Toast.LENGTH_SHORT).show();
 
         View view = inflater.inflate(R.layout.fragment_translater, container, false);
-        sourceWordTextView = (TextView)view.findViewById(R.id.source_word);
-        translatedWordTextView = (TextView)view.findViewById(R.id.translated_word);
+        sourceWordTextView = (EditText)view.findViewById(R.id.source_word);
+        translatedWordTextView = (EditText)view.findViewById(R.id.translated_word);
+        mBookmarkButton = (ImageButton)view.findViewById(R.id.btn_bookmark);
 
-        final Button mTranslateButton = (Button)view.findViewById(R.id.btn_translate);
+
+        Button mTranslateButton = (Button)view.findViewById(R.id.btn_translate);
         mTranslateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -60,10 +59,7 @@ public class TranslaterFragment extends Fragment {
 //                textView.setFocusable(false);
 
                 // Спрячем клавиатуру после перевода
-                InputMethodManager inputManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-                inputManager.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-
-//                Toast.makeText(getActivity(), ARG_SECTION_NUMBER, Toast.LENGTH_SHORT).show();
+                hideKeyboard();
             }
         });
 
@@ -76,40 +72,64 @@ public class TranslaterFragment extends Fragment {
                 translatedWordTextView.setText("");
 
                 // Покажем клавиатуру после очистки поля
-                InputMethodManager inputManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-                inputManager.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
+                showKeyboard();
 
-                ImageView imageView = (ImageView)getActivity().findViewById(R.id.btn_bookmark);
-                imageView.setImageResource(R.mipmap.ic_bookmark_border);
+                mBookmarkButton.setImageResource(R.mipmap.ic_bookmark_border);
             }
         });
 
-        ImageButton mBookmarkButton = (ImageButton)view.findViewById(R.id.btn_bookmark);
         mBookmarkButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String sourceWord = sourceWordTextView.getText().toString();
-                String tranlatedWord = translatedWordTextView.getText().toString();
+                String translatedWord = translatedWordTextView.getText().toString();
 
-                if ((sourceWord.isEmpty() == true) || (tranlatedWord.isEmpty() == true)) {
+                if ((sourceWord.isEmpty() == true) || (translatedWord.isEmpty() == true)) {
                     Toast.makeText(getActivity(), "Не выбрано слово!", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
                 Vocabulary vocab = Vocabulary.get(getActivity());
-                vocab.addTranslationWord(new TranslationWord(sourceWord, tranlatedWord));
+                vocab.addTranslationWord(new TranslationWord(sourceWord, translatedWord));
 
+                mBookmarkButton.setImageResource(R.mipmap.ic_bookmark);
 
-                ImageView imageView = (ImageView)getActivity().findViewById(R.id.btn_bookmark);
-                imageView.setImageResource(R.mipmap.ic_bookmark);
-
-//                Toast.makeText(getActivity(), sourceWord + " добавлено в словарь", Toast.LENGTH_SHORT).show();
                 Toast.makeText(getActivity(), "Добавлено в словарь!", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
+        ImageButton mEditButton = (ImageButton)view.findViewById(R.id.btn_edit);
+        mEditButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getActivity(), "Edit!", Toast.LENGTH_SHORT).show();
+                translatedWordTextView.setEnabled(true);
+                translatedWordTextView.setCursorVisible(true);
+//                translatedWordTextView.setFocusable(true);
+                translatedWordTextView.setFocusableInTouchMode(true);
+
+                translatedWordTextView.setSelection(translatedWordTextView.getText().length());
             }
         });
 
         return view;
     }
+
+
+
+    private void showKeyboard() {
+        InputMethodManager inputManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        inputManager.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
+    }
+
+    private void hideKeyboard() {
+        InputMethodManager inputManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        inputManager.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+    }
+
+
+
 
     /**
      * Returns a new instance of this fragment for the given section
