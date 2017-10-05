@@ -106,8 +106,8 @@ public class TranslaterFragment extends Fragment {
                 Toast.makeText(getActivity(), "Edit!", Toast.LENGTH_SHORT).show();
                 translatedWordTextView.setEnabled(true);
                 translatedWordTextView.setCursorVisible(true);
-//                translatedWordTextView.setFocusable(true);
                 translatedWordTextView.setFocusableInTouchMode(true);
+                translatedWordTextView.setFocusable(true);
 
                 translatedWordTextView.setSelection(translatedWordTextView.getText().length());
             }

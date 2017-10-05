@@ -1,5 +1,6 @@
 package ru.bokhonin.lexicon.model;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.UUID;
 
@@ -40,6 +41,11 @@ public class TranslationWord {
 
     public Date getDateUpload() {
         return mDateUpload;
+    }
+
+    public String getDateUploadFormat() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
+        return dateFormat.format(mDateUpload);
     }
 
     public void setDateUpload(Date dateUpload) {

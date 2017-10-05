@@ -103,7 +103,7 @@ public class Vocabulary {
                 whereArgs,
                 null,
                 null,
-                null
+                DbSchema.TranslatedWordTable.Cols.DATEUPLOAD + " DESC"
         );
 
         return new TranslationWordCursorWrapper(cursor);
@@ -113,9 +113,9 @@ public class Vocabulary {
         ContentValues values = new ContentValues();
 
         values.put(DbSchema.TranslatedWordTable.Cols.UUID, translationWord.getUUID().toString());
-        values.put(DbSchema.TranslatedWordTable.Cols.ENWORD, translationWord.getEnWord().toString());
-        values.put(DbSchema.TranslatedWordTable.Cols.RUWORD, translationWord.getRuWord().toString());
-        values.put(DbSchema.TranslatedWordTable.Cols.DATEUPLOAD, translationWord.getDateUpload().toString());
+        values.put(DbSchema.TranslatedWordTable.Cols.ENWORD, translationWord.getEnWord());
+        values.put(DbSchema.TranslatedWordTable.Cols.RUWORD, translationWord.getRuWord());
+        values.put(DbSchema.TranslatedWordTable.Cols.DATEUPLOAD, translationWord.getDateUpload().getTime());
 
         return values;
     }

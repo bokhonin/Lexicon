@@ -5,14 +5,12 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.DividerItemDecoration;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 import ru.bokhonin.lexicon.R;
 import ru.bokhonin.lexicon.model.TranslationWord;
 import ru.bokhonin.lexicon.model.Vocabulary;
@@ -67,6 +65,7 @@ public class VocabularyFragment extends Fragment {
 
         private TextView mWordTextView;
         private TextView mTranslationTextView;
+        private TextView mUploadDate;
 
         public Holder(LayoutInflater inflater, ViewGroup parent) {
             super(inflater.inflate(R.layout.list_item_trans_word, parent, false));
@@ -74,12 +73,14 @@ public class VocabularyFragment extends Fragment {
 
             mWordTextView = (TextView)itemView.findViewById(R.id.word);
             mTranslationTextView = (TextView)itemView.findViewById(R.id.translation);
+            mUploadDate = (TextView)itemView.findViewById(R.id.uploadDate);
         }
 
         public void bind(TranslationWord transWord) {
             mTranslationWord = transWord;
             mWordTextView.setText(mTranslationWord.getEnWord());
             mTranslationTextView.setText(mTranslationWord.getRuWord());
+            mUploadDate.setText(mTranslationWord.getDateUploadFormat());
         }
 
         @Override
@@ -140,7 +141,7 @@ public class VocabularyFragment extends Fragment {
         itemDecoration.setDrawable(
                 ContextCompat.getDrawable(
                         VocabularyFragment.this.getActivity(),
-                        R.drawable.divider_white
+                        R.drawable.divider_list
                 )
         );
 
