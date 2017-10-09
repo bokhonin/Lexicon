@@ -19,15 +19,17 @@ import org.json.JSONException;
  */
 public class Translater {
 
-    public String translate(String lang, String input) throws IOException {
+    private static final String API_KEY_TRANS = "trnsl.1.1.20131030T070606Z.e297ce8dca9f74d1.84091fee328c7cb3a996a12102346376163f4b04";
+    private static final String PATH_TRANS = "https://translate.yandex.net/api/v1.5/tr.json/translate";
 
-//        final String API_KEY = "trnsl.1.1.20131030T070606Z.e297ce8dca9f74d1.84091fee328c7cb3a996a12102346376163f4b04";
-//        String PATH = "https://translate.yandex.net/api/v1.5/tr.json/translate";
+    private static final String API_KEY_DICT = "dict.1.1.20170924T222659Z.5448372c2df43bec.45c465fbbf95389f9ce5bda32fb8e544470e02df";
+    private static final String PATH_DICT = "https://dictionary.yandex.net/api/v1/dicservice.json/lookup";
 
-        String urlStr = "https://translate.yandex.net/api/v1.5/tr.json/translate?key=trnsl.1.1.20131030T070606Z.e297ce8dca9f74d1.84091fee328c7cb3a996a12102346376163f4b04" + "&lang=" + lang + "&text=" + URLEncoder.encode(input, "UTF-8");
+    public String translateTrans(String lang, String input) throws IOException {
+
+        String urlStr = PATH_TRANS + "?key=" + API_KEY_TRANS + "&lang=" + lang + "&text=" + URLEncoder.encode(input, "UTF-8");
 
         String translatedWord = getUrl(urlStr);
-
 
         //"code":200,"lang":"en-ru","text":["Проект чертежи"]
         JSONObject dataJsonObj = null;
@@ -43,6 +45,35 @@ public class Translater {
         }
         return clearTranslatedWord;
     }
+
+    public String translateDict(String lang, String input) throws IOException {
+
+        String urlStr = PATH_DICT + "?key=" + API_KEY_DICT + "&lang=" + lang + "&text=" + URLEncoder.encode(input, "UTF-8");
+
+        String translatedWord = getUrl(urlStr);
+
+        JSONObject dataJsonObj = null;
+        String clearTranslatedWord = "";
+
+        try {
+            dataJsonObj = new JSONObject(translatedWord);
+            JSONArray part1 = dataJsonObj.getJSONArray("def");
+            JSONObject part2 = part1.getJSONObject(0);
+            JSONArray words = part2.getJSONArray("tr");
+
+            for (int i = 0; i < words.length(); i++) {
+                JSONObject word = words.getJSONObject(i);
+
+                String wordText = word.getString("text");
+
+                clearTranslatedWord = clearTranslatedWord + wordText + "; ";
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return clearTranslatedWord;
+    }
+
 
     public static String getUrl(String urlSpec) throws IOException {
         return new String(getUrlBytes(urlSpec));
@@ -68,8 +99,6 @@ public class Translater {
                 out.write(buffer, 0, bytesRead);
             }
             out.close();
-
-
 
             return out.toByteArray();
         } finally {

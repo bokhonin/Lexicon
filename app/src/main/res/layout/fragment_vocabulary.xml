@@ -6,11 +6,26 @@
 >
 
 
-    <SearchView
+    <!--<SearchView
             android:id="@+id/voc_search"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:alpha="0.5"
+    />
+
+    <View
+            android:layout_width="fill_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/border_color"
+    />
+    -->
+    <Spinner
+            android:id="@+id/spinner"
+            android:layout_width="match_parent"
+            android:layout_height="32dp"
+            android:alpha="0.6"
+            android:entries="@array/list_sort"
+
     />
 
     <View
@@ -24,7 +39,8 @@
                                             android:layout_width="match_parent"
                                             android:layout_height="match_parent"
                                             android:paddingLeft="16dp"
-                                            android:paddingRight="5dp">
+                                            android:paddingRight="5dp"
+    >
 
     </android.support.v7.widget.RecyclerView>
 

@@ -4,6 +4,7 @@ package ru.bokhonin.lexicon.presenter;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -30,12 +31,23 @@ public class TranslaterFragment extends Fragment {
 
     private EditText sourceWordTextView;
     private EditText translatedWordTextView;
+    private EditText translatedWordTextViewDetail;
     private ImageButton mBookmarkButton;
+    private boolean mAddBookmark;
+    private static final String BOOKMARK_STATE = "bookmarkState";
+
+    private static final String TAG_DEBUG = "Lexy";
+
 
     public TranslaterFragment() {
         // Required empty public constructor
     }
 
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        Log.i(TAG_DEBUG, "onActivityCreated");
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -43,10 +55,21 @@ public class TranslaterFragment extends Fragment {
 
 //        Toast.makeText(getActivity(), "onCreateView - TranslaterFragment", Toast.LENGTH_SHORT).show();
 
+        Log.i(TAG_DEBUG, "onCreateView");
+
         View view = inflater.inflate(R.layout.fragment_translater, container, false);
         sourceWordTextView = (EditText)view.findViewById(R.id.source_word);
         translatedWordTextView = (EditText)view.findViewById(R.id.translated_word);
+        translatedWordTextViewDetail = (EditText)view.findViewById(R.id.translated_word_detail);
         mBookmarkButton = (ImageButton)view.findViewById(R.id.btn_bookmark);
+
+//        setRetainInstance(true);
+        // В случае использования FragmentStatePagerAdapter этот кусок нужно использовать
+//        if (savedInstanceState != null) {
+//            setBookmark(savedInstanceState.getBoolean(BOOKMARK_STATE, false));
+//        }
+
+        setBookmark(mAddBookmark);
 
 
         Button mTranslateButton = (Button)view.findViewById(R.id.btn_translate);
@@ -60,6 +83,7 @@ public class TranslaterFragment extends Fragment {
 
                 // Спрячем клавиатуру после перевода
                 hideKeyboard();
+                setBookmark(false);
             }
         });
 
@@ -70,11 +94,11 @@ public class TranslaterFragment extends Fragment {
             public void onClick(View view) {
                 sourceWordTextView.setText("");
                 translatedWordTextView.setText("");
+                translatedWordTextViewDetail.setText("");
 
                 // Покажем клавиатуру после очистки поля
                 showKeyboard();
-
-                mBookmarkButton.setImageResource(R.mipmap.ic_bookmark_border);
+                setBookmark(false);
             }
         });
 
@@ -92,7 +116,7 @@ public class TranslaterFragment extends Fragment {
                 Vocabulary vocab = Vocabulary.get(getActivity());
                 vocab.addTranslationWord(new TranslationWord(sourceWord, translatedWord));
 
-                mBookmarkButton.setImageResource(R.mipmap.ic_bookmark);
+                setBookmark(true);
 
                 Toast.makeText(getActivity(), "Добавлено в словарь!", Toast.LENGTH_SHORT).show();
             }
@@ -116,7 +140,21 @@ public class TranslaterFragment extends Fragment {
         return view;
     }
 
+    private void setBookmark(boolean newState) {
+        mAddBookmark = newState;
 
+        if (mAddBookmark == true) {
+            mBookmarkButton.setImageResource(R.mipmap.ic_favorite_pink);
+        } else {
+            mBookmarkButton.setImageResource(R.mipmap.ic_favorite_border);
+        }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putBoolean(BOOKMARK_STATE, mAddBookmark);
+    }
 
     private void showKeyboard() {
         InputMethodManager inputManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -125,11 +163,52 @@ public class TranslaterFragment extends Fragment {
 
     private void hideKeyboard() {
         InputMethodManager inputManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-        inputManager.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+//        inputManager.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+        inputManager.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(), 0);
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+//        onSaveInstanceState(new Bundle());
+        Log.i(TAG_DEBUG, "onPause");
+    }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.i(TAG_DEBUG, "onResume");
+    }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        Log.i(TAG_DEBUG, "onDestroyView");
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Log.i(TAG_DEBUG, "onDestroy");
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        Log.i(TAG_DEBUG, "onStart");
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        Log.i(TAG_DEBUG, "onStop");
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        Log.i(TAG_DEBUG, "onDetach");
+    }
 
     /**
      * Returns a new instance of this fragment for the given section
@@ -147,16 +226,23 @@ public class TranslaterFragment extends Fragment {
         translatedWordTextView.setText(str);
     }
 
+    public void setTransDetail(String str) {
+        translatedWordTextViewDetail.setText(str);
+    }
+
+
     private class GetTranslateTask extends AsyncTask<String, Void, Void> {
 
         String translatedWord = "";
+        String translatedWordDetail = "";
 
         @Override
         protected Void doInBackground(String... params) {
             String word = params[0];
 
             try {
-                translatedWord = new Translater().translate("en-ru", word);
+                translatedWord = new Translater().translateTrans("en-ru", word);
+                translatedWordDetail = new Translater().translateDict("en-ru", word);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -167,6 +253,7 @@ public class TranslaterFragment extends Fragment {
         @Override
         protected void onPostExecute(Void aVoid) {
             setTrans(translatedWord);
+            setTransDetail(translatedWordDetail);
 //            Log.d("test____!!!", translatedWord);
         }
     }

@@ -7,6 +7,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -106,13 +107,14 @@ public class MainActivity extends AppCompatActivity {
 
       /**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
-     * one of the sections/tabs/pages.
+     * one of the sections/tabs/pages. (FragmentStatePagerAdapter)
      */
-    public class SectionsPagerAdapter extends FragmentPagerAdapter {
+    public static class SectionsPagerAdapter extends FragmentPagerAdapter{
 
-        public SectionsPagerAdapter(FragmentManager fm) {
-            super(fm);
-        }
+          public SectionsPagerAdapter(FragmentManager fm) {
+              super(fm);
+          }
+
 
         @Override
         public Fragment getItem(int position) {
