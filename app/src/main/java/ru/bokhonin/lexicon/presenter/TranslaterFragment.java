@@ -137,8 +137,11 @@ public class TranslaterFragment extends Fragment {
             }
         });
 
+
+
         return view;
     }
+
 
     private void setBookmark(boolean newState) {
         mAddBookmark = newState;

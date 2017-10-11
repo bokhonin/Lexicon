@@ -1,30 +1,38 @@
 package ru.bokhonin.lexicon.presenter;
 
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnLongClickListener;
 import android.view.ViewGroup;
+import android.widget.Adapter;
 import android.widget.TextView;
+import android.widget.Toast;
 import ru.bokhonin.lexicon.R;
 import ru.bokhonin.lexicon.model.TranslationWord;
 import ru.bokhonin.lexicon.model.Vocabulary;
 
 import java.util.List;
+import java.util.UUID;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class VocabularyFragment extends Fragment {
+public class VocabularyFragment extends Fragment{
     private RecyclerView mRecyclerView;
     private Adapter mAdapter;
 
-
+    private static final String DIALOG_DEL = "ru.bokhonin.lexicon.dialog_del";
+    private static final int REQUEST_DEL = 0;
 
     public VocabularyFragment() {
         // Required empty public constructor
@@ -50,6 +58,9 @@ public class VocabularyFragment extends Fragment {
     }
 
 
+
+
+
     /**
      * Returns a new instance of this fragment for the given section
      * number.
@@ -60,7 +71,7 @@ public class VocabularyFragment extends Fragment {
     }
 
 
-    private class Holder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    private class Holder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener{
         private TranslationWord mTranslationWord;
 
         private TextView mWordTextView;
@@ -70,6 +81,7 @@ public class VocabularyFragment extends Fragment {
         public Holder(LayoutInflater inflater, ViewGroup parent) {
             super(inflater.inflate(R.layout.list_item_trans_word, parent, false));
             itemView.setOnClickListener(this);
+            itemView.setOnLongClickListener(this);
 
             mWordTextView = (TextView)itemView.findViewById(R.id.word);
             mTranslationTextView = (TextView)itemView.findViewById(R.id.translation);
@@ -88,16 +100,52 @@ public class VocabularyFragment extends Fragment {
 //            Intent intent = CrimePagerActivity.newIntent(getActivity(), mCrime.getId());
 //            startActivity(intent);
         }
+
+        @Override
+        public boolean onLongClick(View view) {
+//            Toast.makeText(getActivity(), this.mTranslationWord.getEnWord(), Toast.LENGTH_SHORT).show();
+
+            FragmentManager manager = getFragmentManager();
+            DialogVocabList dialog = DialogVocabList.newInstance(this.mTranslationWord.getUUID());
+
+            dialog.setTargetFragment(VocabularyFragment.this, REQUEST_DEL);
+
+            dialog.show(manager, DIALOG_DEL);
+
+            return true;
+        }
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode != Activity.RESULT_OK) return;
+
+        if (requestCode == REQUEST_DEL) {
+            UUID id = (UUID)data.getSerializableExtra(DialogVocabList.ARG_ID);
+
+            // Удалим слово из списка
+            Vocabulary vocab = Vocabulary.get(getActivity());
+            vocab.deleteTranslationWord(id);
+//            updateUI();
 
 
+            List<TranslationWord> translationWords = vocab.getVocabulary();
+            mAdapter.setTranslationWords(translationWords);
+            mAdapter.notifyDataSetChanged();
+
+            Toast.makeText(getActivity(), "Слово удалено!", Toast.LENGTH_SHORT).show();
+        }
+    }
 
     private class Adapter extends RecyclerView.Adapter<Holder> {
         private List<TranslationWord> mTranslationWords;
 
+//        private final View.OnLongClickListener mLongClickListener;
+
         public Adapter(List<TranslationWord> translationWords) {
             mTranslationWords = translationWords;
+//            , View.OnLongClickListener longClickListener
+//            mLongClickListener = longClickListener;
         }
 
         @Override

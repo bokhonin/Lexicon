@@ -94,6 +94,16 @@ public class Vocabulary {
         mDatabase.update(DbSchema.TranslatedWordTable.NAME, values, DbSchema.TranslatedWordTable.Cols.UUID + " = ?", new String[] {uuidString});
     }
 
+    public void deleteTranslationWord(UUID id) {
+
+        TranslationWord translationWord = getTranslationWord(id);
+        String uuidString = translationWord.getUUID().toString();
+//        ContentValues values = getContentValues(translationWord);
+
+        mDatabase.delete(DbSchema.TranslatedWordTable.NAME,DbSchema.TranslatedWordTable.Cols.UUID + " = ?", new String[] {uuidString});
+
+    }
+
     @NonNull
     private TranslationWordCursorWrapper queryTranslationWord(String whereClause, String[] whereArgs) {
         Cursor cursor = mDatabase.query(
@@ -119,6 +129,7 @@ public class Vocabulary {
 
         return values;
     }
+
 
 
 }
