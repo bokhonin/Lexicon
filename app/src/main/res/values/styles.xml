@@ -6,7 +6,7 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="actionBarSize">36dp</item>
+        <item name="actionBarSize">48dp</item>
         <item name="actionBarDivider">@color/colorAccent</item>
     </style>
     <style name="AppTheme.NoActionBar">
@@ -48,19 +48,20 @@
     <style name="TranslatedWordDetail" parent="Base.Widget.AppCompat.EditText">
         <item name="android:textSize">18sp</item>
         <item name="android:gravity">left|center_horizontal</item>
-        <item name="android:background">@drawable/border_rectangle</item>
-        <item name="android:padding">8dp</item>
+        <item name="android:background">@drawable/rectangle</item>
+        <item name="android:padding">10dp</item>
     </style>
 
 
     <!-- Button -->
-    <style name="ImageButtonAdd" parent="Base.Widget.AppCompat.ImageButton">
+    <style name="ImageButtonAdd">
         <!--<item name="android:background">@drawable/button_display</item>-->
-        <item name="android:layout_marginTop">32dp</item>
+        <!--<<item name="android:layout_marginTop">32dp</item>-->
+        <item name="android:alpha">.8</item>
     </style>
 
-    <style name="ImageButtonEdit" parent="Base.Widget.AppCompat.ImageButton">
-        <item name="android:alpha">1</item>
+    <style name="ImageButtonEdit">
+        <item name="android:alpha">.8</item>
     </style>
 
     <style name="ImageButtonClear" parent="Base.Widget.AppCompat.ImageButton">

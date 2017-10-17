@@ -21,7 +21,9 @@ import java.util.UUID;
 public class DialogVocabList extends DialogFragment{
 
     public static final String ARG_ID = "ru.bokhonin.lexicon.id";
+    public static final String ARG_POS = "ru.bokhonin.lexicon.position";
     public static UUID mId;
+    public static int mPosition;
 
     @NonNull
     @Override
@@ -40,12 +42,14 @@ public class DialogVocabList extends DialogFragment{
     }
 
 
-    public static DialogVocabList newInstance(UUID id) {
+    public static DialogVocabList newInstance(UUID id, int position) {
 
         mId = id;
+        mPosition = position;
 
         Bundle args = new Bundle();
         args.putSerializable(ARG_ID, id);
+        args.putSerializable(ARG_POS, mPosition);
 
         DialogVocabList dialogFragment = new DialogVocabList();
         dialogFragment.setArguments(args);
@@ -59,6 +63,7 @@ public class DialogVocabList extends DialogFragment{
 
         Intent intent = new Intent();
         intent.putExtra(ARG_ID, mId);
+        intent.putExtra(ARG_POS, mPosition);
 
         getTargetFragment().onActivityResult(getTargetRequestCode(), resultCode, intent);
     }

@@ -66,7 +66,7 @@ public class Translater {
 
                 String wordText = word.getString("text");
 
-                clearTranslatedWord = clearTranslatedWord + wordText + "; ";
+                clearTranslatedWord = clearTranslatedWord + " - " + wordText + System.lineSeparator();
             }
         } catch (JSONException e) {
             e.printStackTrace();

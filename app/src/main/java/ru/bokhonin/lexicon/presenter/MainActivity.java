@@ -1,20 +1,18 @@
 package ru.bokhonin.lexicon.presenter;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Toast;
 import ru.bokhonin.lexicon.R;
+import android.widget.Toast;
+
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -55,14 +53,14 @@ public class MainActivity extends AppCompatActivity {
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+//        fab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+//                        .setAction("Action", null).show();
+//            }
+//        });
 
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -124,10 +122,10 @@ public class MainActivity extends AppCompatActivity {
             switch (position) {
                 case 0:
                     return TranslaterFragment.newInstance(position);
-                case 2:
-                    return VocabularyFragment.newInstance(position);
+//                case 2:
+//                    return TrainingFragment.newInstance(position);
                 case 1:
-                    return HistoryFragment.newInstance(position);
+                    return VocabularyFragment.newInstance(position);
                 default:
                     return null;
             }
@@ -138,7 +136,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public int getCount() {
             // Show 3 total pages.
-            return 3;
+            return 2;
         }
 
         @Override
@@ -147,10 +145,10 @@ public class MainActivity extends AppCompatActivity {
                 case 0:
                     return "Переводчик";
 //                    return getString(R.string...);
-                case 2:
-                    return "Словарь";
+//                case 2:
+//                    return "Тренировка";
                 case 1:
-                    return "Тренировка";
+                    return "Мой словарь";
             }
             return null;
         }

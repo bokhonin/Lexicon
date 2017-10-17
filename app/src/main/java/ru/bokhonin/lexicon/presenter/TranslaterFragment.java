@@ -6,6 +6,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,7 +18,9 @@ import ru.bokhonin.lexicon.model.TranslationWord;
 import ru.bokhonin.lexicon.model.Vocabulary;
 import ru.bokhonin.lexicon.utils.Translater;
 
+
 import java.io.IOException;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -32,7 +35,7 @@ public class TranslaterFragment extends Fragment {
     private EditText sourceWordTextView;
     private EditText translatedWordTextView;
     private EditText translatedWordTextViewDetail;
-    private ImageButton mBookmarkButton;
+    private ImageView mBookmarkButton;
     private boolean mAddBookmark;
     private static final String BOOKMARK_STATE = "bookmarkState";
 
@@ -61,7 +64,7 @@ public class TranslaterFragment extends Fragment {
         sourceWordTextView = (EditText)view.findViewById(R.id.source_word);
         translatedWordTextView = (EditText)view.findViewById(R.id.translated_word);
         translatedWordTextViewDetail = (EditText)view.findViewById(R.id.translated_word_detail);
-        mBookmarkButton = (ImageButton)view.findViewById(R.id.btn_bookmark);
+        mBookmarkButton = (ImageView)view.findViewById(R.id.btn_bookmark);
 
 //        setRetainInstance(true);
         // В случае использования FragmentStatePagerAdapter этот кусок нужно использовать
@@ -118,12 +121,20 @@ public class TranslaterFragment extends Fragment {
 
                 setBookmark(true);
 
+                FragmentManager fm = getActivity().getSupportFragmentManager();
+                List<Fragment> listFragments= fm.getFragments();
+
+                if (listFragments != null) {
+                    Fragment fragment = listFragments.get(1);
+                    fragment.onResume();
+                }
+
                 Toast.makeText(getActivity(), "Добавлено в словарь!", Toast.LENGTH_SHORT).show();
             }
         });
 
 
-        ImageButton mEditButton = (ImageButton)view.findViewById(R.id.btn_edit);
+        ImageView mEditButton = (ImageView)view.findViewById(R.id.btn_edit);
         mEditButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -149,7 +160,7 @@ public class TranslaterFragment extends Fragment {
         if (mAddBookmark == true) {
             mBookmarkButton.setImageResource(R.mipmap.ic_favorite_pink);
         } else {
-            mBookmarkButton.setImageResource(R.mipmap.ic_favorite_border);
+            mBookmarkButton.setImageResource(R.drawable.ic_favorite_border2);
         }
     }
 

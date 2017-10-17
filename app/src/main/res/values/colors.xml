@@ -18,4 +18,6 @@
 
     <color name="border_color">#52000000</color>
     <color name="background_color">#52FFFFFF</color>
+    <color name="background_color2">#72ffff8d</color>
+    <color name="background_color3">#e0e0e0</color>
 </resources>
