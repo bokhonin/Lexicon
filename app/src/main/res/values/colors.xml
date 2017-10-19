@@ -20,4 +20,8 @@
     <color name="background_color">#52FFFFFF</color>
     <color name="background_color2">#72ffff8d</color>
     <color name="background_color3">#e0e0e0</color>
+
+    <color name="background_tag_color">#58a5f0</color>
+    <color name="text_tag_color">#ffffff</color>
+
 </resources>

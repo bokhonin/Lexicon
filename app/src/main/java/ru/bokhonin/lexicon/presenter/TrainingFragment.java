@@ -2,9 +2,11 @@ package ru.bokhonin.lexicon.presenter;
 
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -19,19 +21,28 @@ import ru.bokhonin.lexicon.model.TranslationWord;
 import ru.bokhonin.lexicon.model.Vocabulary;
 
 import java.util.List;
+import java.util.UUID;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class TrainingFragment extends Fragment {
+public class TrainingFragment extends Fragment{
 
     private TextView word;
+    private TranslationWord mTranslationWord;
 
 
     public TrainingFragment() {
         // Required empty public constructor
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        UUID id = (UUID)getArguments().getSerializable("testing");
+        mTranslationWord = Vocabulary.get(getActivity()).getTranslationWord(id);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -42,14 +53,16 @@ public class TrainingFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_training, container, false);
 
         word = (TextView)view.findViewById(R.id.training_word);
-        word.setText("Test");
+        word.setText(mTranslationWord.getEnWord());
 
+//        TextView text1 = (TextView)getActivity().findViewById(R.id.text1);
+//        text1.setText(mTranslationWord.getEnWord());
 
         ImageView imageEye = (ImageView)view.findViewById(R.id.image_eye);
         imageEye.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                word.setText("Working!!!!!!");
+                word.setText(mTranslationWord.getRuWord());
             }
         });
 
@@ -76,6 +89,30 @@ public class TrainingFragment extends Fragment {
 //        });
         
         
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+//        TextView text1 = (TextView)getActivity().findViewById(R.id.text1);
+//        text1.setText(mTranslationWord.getEnWord());
+    }
+
+
+
+
+
+
+
+    public static TrainingFragment newInstance(UUID id) {
+        Bundle args = new Bundle();
+        args.putSerializable("testing", id);
+
+        TrainingFragment fragment = new TrainingFragment();
+        fragment.setArguments(args);
+
+        return fragment;
     }
 
 
