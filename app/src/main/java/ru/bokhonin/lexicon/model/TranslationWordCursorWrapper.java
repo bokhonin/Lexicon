@@ -18,11 +18,15 @@ public class TranslationWordCursorWrapper extends CursorWrapper{
         String enWord = getString(getColumnIndex(DbSchema.TranslatedWordTable.Cols.ENWORD));
         String ruWord = getString(getColumnIndex(DbSchema.TranslatedWordTable.Cols.RUWORD));
         long dateUpload = getLong(getColumnIndex(DbSchema.TranslatedWordTable.Cols.DATEUPLOAD));
+        long dateTraining = getLong(getColumnIndex(DbSchema.TranslatedWordTable.Cols.DATETRAINING));
+        int statusLearning = getInt(getColumnIndex(DbSchema.TranslatedWordTable.Cols.STATUSLEARNING));
 
         TranslationWord translationWord = new TranslationWord(UUID.fromString(uuidString));
         translationWord.setEnWord(enWord);
         translationWord.setRuWord(ruWord);
         translationWord.setDateUpload(new Date(dateUpload));
+        translationWord.setDateTraining(new Date(dateTraining));
+        translationWord.setStatusLearning(statusLearning);
 
         return translationWord;
     }

@@ -98,6 +98,7 @@ public class VocabularyFragment extends Fragment{
         private TextView mWordTextView;
         private TextView mTranslationTextView;
         private TextView mUploadDate;
+        private TextView mTag;
 
         public Holder(LayoutInflater inflater, ViewGroup parent) {
             super(inflater.inflate(R.layout.list_item_trans_word, parent, false));
@@ -107,6 +108,7 @@ public class VocabularyFragment extends Fragment{
             mWordTextView = (TextView)itemView.findViewById(R.id.word);
             mTranslationTextView = (TextView)itemView.findViewById(R.id.translation);
             mUploadDate = (TextView)itemView.findViewById(R.id.uploadDate);
+            mTag = (TextView)itemView.findViewById(R.id.tag);
         }
 
         public void bind(TranslationWord transWord) {
@@ -114,6 +116,7 @@ public class VocabularyFragment extends Fragment{
             mWordTextView.setText(mTranslationWord.getEnWord());
             mTranslationTextView.setText(mTranslationWord.getRuWord());
             mUploadDate.setText(mTranslationWord.getDateUploadFormat());
+            mTag.setText(mTranslationWord.getStatusLearningString());
         }
 
         @Override

@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 import ru.bokhonin.lexicon.R;
@@ -13,6 +14,7 @@ import ru.bokhonin.lexicon.model.TranslationWord;
 import ru.bokhonin.lexicon.model.Vocabulary;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -86,6 +88,29 @@ public class TrainingActivity extends AppCompatActivity {
         });
 
         setNumberPage(0);
+
+
+
+//        TextView button = (TextView)findViewById(R.id.text1);
+//        button.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Vocabulary vocab = Vocabulary.get(TrainingActivity.this);
+//                List<TranslationWord> translationWords = vocab.getVocabulary();
+//
+//                for (int i = 0; i < translationWords.size(); i++) {
+//                    TranslationWord transWord = translationWords.get(i);
+//                    transWord.setDateTraining(transWord.getDateUpload());
+//                    transWord.setStatusLearning(0);
+//
+//                    vocab.updateTranslationWord(transWord);
+//                }
+//            }
+//        });
+
+
+
+
 
 //        for (int i = 0; i < mCrimes.size(); i++) {
 //            if (mTranslationWords.get(i).getUUID().equals(crimeId)) {

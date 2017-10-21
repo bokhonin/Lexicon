@@ -126,6 +126,8 @@ public class Vocabulary {
         values.put(DbSchema.TranslatedWordTable.Cols.ENWORD, translationWord.getEnWord());
         values.put(DbSchema.TranslatedWordTable.Cols.RUWORD, translationWord.getRuWord());
         values.put(DbSchema.TranslatedWordTable.Cols.DATEUPLOAD, translationWord.getDateUpload().getTime());
+        values.put(DbSchema.TranslatedWordTable.Cols.DATETRAINING, translationWord.getDateTraining().getTime());
+        values.put(DbSchema.TranslatedWordTable.Cols.STATUSLEARNING, translationWord.getStatusLearning());
 
         return values;
     }

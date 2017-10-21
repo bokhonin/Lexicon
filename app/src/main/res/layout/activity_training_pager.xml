@@ -29,7 +29,7 @@
             android:id="@+id/training_view_pager"
             android:layout_margin="0dp"
             android:layout_width="0dp"
-            android:layout_height="400dp"
+            android:layout_height="450dp"
             android:layout_marginTop="8dp"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
