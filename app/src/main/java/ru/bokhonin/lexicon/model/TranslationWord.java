@@ -57,25 +57,7 @@ public class TranslationWord {
         return mStatusLearning;
     }
 
-    public String getStatusLearningString() {
-        String status = "";
-
-        if (mStatusLearning == 0 || mStatusLearning == 1) {
-            status = "⋆ новое";
-        } else if (mStatusLearning == 2) {
-            status = "⋆ завтра";
-        } else if (mStatusLearning == 3) {
-            status = "⋆ неделя";
-        } else if (mStatusLearning == 4) {
-            status = "⋆ месяц";
-        } else if (mStatusLearning == 4) {
-            status = "⋆ выучено";
-        };
-
-        return status;
-    }
-
-    public String getDateUploadFormat() {
+     public String getDateUploadFormat() {
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
         return dateFormat.format(mDateUpload);
     }

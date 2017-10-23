@@ -116,7 +116,10 @@ public class VocabularyFragment extends Fragment{
             mWordTextView.setText(mTranslationWord.getEnWord());
             mTranslationTextView.setText(mTranslationWord.getRuWord());
             mUploadDate.setText(mTranslationWord.getDateUploadFormat());
-            mTag.setText(mTranslationWord.getStatusLearningString());
+
+//            mTag.setText(mTranslationWord.getStatusLearningString());
+//            mTag.setBackground(getResources().getDrawable(R.drawable.rectangle_tag, null));
+            setStatusTranslationWord(mTag, mTranslationWord);
         }
 
         @Override
@@ -240,6 +243,35 @@ public class VocabularyFragment extends Fragment{
 //            mAdapter.notifyDataSetChanged();
         }
     }
+
+    private void setStatusTranslationWord(TextView tag, TranslationWord translationWord) {
+
+        String text = "???";
+        int draw = R.drawable.rectangle_tag;
+
+        int status = translationWord.getStatusLearning();
+
+        if (status == 0 || status == 1) {
+            text = "⋆ новое";
+            draw = R.drawable.rectangle_tag;
+        } else if (status == 2) {
+            text = "⋆ завтра";
+            draw = R.drawable.rectangle_tag2;
+        } else if (status == 3) {
+            text = "⋆ неделя";
+            draw = R.drawable.rectangle_tag3;
+        } else if (status == 4) {
+            text = "⋆ месяц";
+            draw = R.drawable.rectangle_tag4;
+        } else if (status == 5) {
+            text = "⋆ выучено";
+            draw = R.drawable.rectangle_tag5;
+        };
+
+        tag.setText(text);
+        tag.setBackground(getResources().getDrawable(draw, null));
+    }
+
 
 
     @Override
