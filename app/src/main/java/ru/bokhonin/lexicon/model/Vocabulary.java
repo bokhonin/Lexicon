@@ -8,6 +8,7 @@ import android.support.annotation.NonNull;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.UUID;
 
 public class Vocabulary {
@@ -78,6 +79,23 @@ public class Vocabulary {
         }
 
         return translationWords;
+    }
+
+    public List<TranslationWord> getTranslationWordsForTraining() {
+
+        List<TranslationWord> translationWords = getVocabulary();
+        List<TranslationWord> translationWordsForTraining = new ArrayList<>();
+
+        int numWords = 20;
+        int sizeVocabulary = translationWords.size();
+
+        Random rand = new Random();
+        for (int i = 0; i < 20; i++) {
+            TranslationWord transWord = translationWords.get(rand.nextInt(sizeVocabulary) + 1);
+            translationWordsForTraining.add(transWord);
+        }
+
+        return translationWordsForTraining;
     }
 
     public void addTranslationWord(TranslationWord translationWord) {

@@ -11,37 +11,41 @@
             android:id="@+id/word"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:paddingLeft="4dp"
+            android:paddingLeft="0dp"
             android:layout_marginStart="4dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="4dp"
             android:layout_marginRight="4dp"
             android:text="Word"
             android:textColor="@android:color/black"
             android:textSize="20sp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginLeft="4dp"
+            android:layout_marginLeft="2dp"
             app:layout_constraintRight_toLeftOf="@+id/tag"/>
 
     <TextView
             android:id="@+id/translation"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="20dp"
             android:text="Translation"
-            android:paddingLeft="4dp"
-            android:paddingBottom="4dp"
-            android:layout_marginStart="4dp"
-            app:layout_constraintLeft_toLeftOf="parent"
+            android:paddingLeft="0dp"
+            android:paddingBottom="0dp"
+
             android:layout_marginTop="8dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginEnd="4dp"
+            android:layout_marginBottom="4dp"
+
+            app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/word"
-            android:layout_marginEnd="8dp"
-            android:layout_marginLeft="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/uploadDate"
     />
     <TextView
             android:id="@+id/uploadDate"
             android:textSize="10sp"
             android:textAlignment="viewEnd"
-            android:layout_width="60dp"
+            android:layout_width="55dp"
             android:layout_height="wrap_content"
             android:paddingBottom="4dp"
             android:layout_marginRight="8dp"
@@ -59,6 +63,6 @@
             android:layout_marginLeft="4dp"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="10dp"/>
+            android:layout_marginTop="6dp"/>
 
 </android.support.constraint.ConstraintLayout>

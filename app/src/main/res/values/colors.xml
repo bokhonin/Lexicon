@@ -8,10 +8,23 @@
     <color name="colorPrimaryDark1">#29434e</color>
     <color name="colorAccent1">#819ca9</color>
 
-    <color name="colorPrimary">#0277bd</color>
-    <color name="colorPrimaryDark">#004c8c</color>
-    <color name="colorPrimaryLight">#58a5f0</color>
-    <color name="colorAccent">#ffa726</color>
+    <color name="colorPrimary2">#0277bd</color>
+    <color name="colorPrimaryDark2">#004c8c</color>
+    <color name="colorPrimaryLight2">#58a5f0</color>
+    <color name="colorAccent22">#ffa726</color>
+    <color name="colorAccent2">#ff5722</color>
+
+    <color name="colorPrimary3">#43a047</color>
+    <color name="colorPrimaryDark3">#00701a</color>
+    <color name="colorPrimaryLight3">#76d275</color>
+    <color name="colorAccent3">#ff5722</color>
+
+    <color name="colorPrimary">#546e7a</color>
+    <color name="colorPrimaryDark">#29434e</color>
+    <color name="colorPrimaryLight">#819ca9</color>
+    <color name="colorAccent">#546e7a</color>
+
+
 
     <color name="colorTransparentWhite">#52FFFFFF</color>
     <color name="colorTransparentBlack">#52000000</color>
@@ -20,6 +33,7 @@
     <color name="background_color">#52FFFFFF</color>
     <color name="background_color2">#eceff1</color>
     <color name="background_color3">#e0e0e0</color>
+    <color name="background_color_card">#fff9c4</color>
 
     <color name="background_tag_color">#f8bbd0</color>
     <color name="background_tag_color2">#ffb74d</color>

@@ -100,7 +100,7 @@ public class TranslaterFragment extends Fragment {
                 translatedWordTextViewDetail.setText("");
 
                 // Покажем клавиатуру после очистки поля
-                showKeyboard();
+//                showKeyboard();
                 setBookmark(false);
             }
         });

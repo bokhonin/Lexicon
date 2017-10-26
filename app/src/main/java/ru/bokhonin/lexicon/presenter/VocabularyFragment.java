@@ -124,6 +124,7 @@ public class VocabularyFragment extends Fragment{
 
         @Override
         public void onClick(View view) {
+            Toast.makeText(getActivity(), this.mTranslationWord.getEnWord(), Toast.LENGTH_SHORT).show();
 //            Intent intent = CrimePagerActivity.newIntent(getActivity(), mCrime.getId());
 //            startActivity(intent);
         }

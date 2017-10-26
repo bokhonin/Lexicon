@@ -22,7 +22,7 @@ public class TrainingActivity extends AppCompatActivity {
 
     private ViewPager mViewPager;
     private List<TranslationWord> mTranslationWords;
-    private List<TranslationWord> mTranslationWords2;
+    private List<TranslationWord> translationWordsForTraining;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,21 +44,24 @@ public class TrainingActivity extends AppCompatActivity {
 
         mViewPager = (ViewPager)findViewById(R.id.training_view_pager);
 
+//        Vocabulary vocab = Vocabulary.get(this);
+//        mTranslationWords = vocab.getVocabulary();
+//        mTranslationWords2 = new ArrayList<>();
+//
+//        for (int i = 0; i < 20; i++) {
+//            TranslationWord transWord = mTranslationWords.get(i);
+//            mTranslationWords2.add(transWord);
+//
+//        }
+
         Vocabulary vocab = Vocabulary.get(this);
-        mTranslationWords = vocab.getVocabulary();
-        mTranslationWords2 = new ArrayList<>();
-
-        for (int i = 0; i < 20; i++) {
-            TranslationWord transWord = mTranslationWords.get(i);
-            mTranslationWords2.add(transWord);
-
-        }
+        translationWordsForTraining = vocab.getTranslationWordsForTraining();
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         mViewPager.setAdapter(new FragmentStatePagerAdapter(fragmentManager) {
             @Override
             public Fragment getItem(int position) {
-                TranslationWord translationWord = mTranslationWords2.get(position);
+                TranslationWord translationWord = translationWordsForTraining.get(position);
 //                Toast.makeText(TrainingActivity.this, "aaa", Toast.LENGTH_SHORT);
 //                return CrimeFragment.newInstance(crime.getId());
 
@@ -68,7 +71,7 @@ public class TrainingActivity extends AppCompatActivity {
 
             @Override
             public int getCount() {
-                return mTranslationWords2.size();
+                return translationWordsForTraining.size();
             }
         });
 
