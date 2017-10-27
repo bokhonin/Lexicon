@@ -24,8 +24,11 @@
             android:layout_height="wrap_content"
             android:layout_gravity="end|bottom"
             android:layout_margin="@dimen/fab_margin"
-            android:background="@color/colorAccent_"
+            android:background="@color/colorAccent"
             android:alpha="0.9"
             app:srcCompat="@drawable/ic_training"
+            app:layout_behavior="ru.bokhonin.lexicon.presenter.FabFloatOnScroll"
+
+
     />
 </android.support.design.widget.CoordinatorLayout>

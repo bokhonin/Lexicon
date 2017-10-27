@@ -6,20 +6,25 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.app.AppCompatActivity;
+import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnLongClickListener;
 import android.view.ViewGroup;
+import android.view.animation.LinearInterpolator;
 import android.widget.Adapter;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -197,6 +202,11 @@ public class VocabularyFragment extends Fragment{
             return mTranslationWords.size();
         }
 
+        @Override
+        public void onAttachedToRecyclerView(RecyclerView recyclerView) {
+            super.onAttachedToRecyclerView(recyclerView);
+        }
+
         public void setTranslationWords(List<TranslationWord> translationWords) {
             mTranslationWords = translationWords;
         }
@@ -272,6 +282,11 @@ public class VocabularyFragment extends Fragment{
         tag.setText(text);
         tag.setBackground(getResources().getDrawable(draw, null));
     }
+
+
+
+
+
 
 
 
