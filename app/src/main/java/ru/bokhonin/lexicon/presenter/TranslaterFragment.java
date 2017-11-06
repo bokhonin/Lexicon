@@ -18,7 +18,6 @@ import ru.bokhonin.lexicon.model.TranslationWord;
 import ru.bokhonin.lexicon.model.Vocabulary;
 import ru.bokhonin.lexicon.utils.Translater;
 
-
 import java.io.IOException;
 import java.util.List;
 
@@ -32,18 +31,29 @@ public class TranslaterFragment extends Fragment {
      */
 //    private static final String ARG_SECTION_NUMBER = "section_number";
 
+    private static final String BOOKMARK_STATE = "bookmarkState";
+    private static final String TAG_DEBUG = "Lexy";
     private EditText sourceWordTextView;
     private EditText translatedWordTextView;
     private EditText translatedWordTextViewDetail;
     private ImageView mBookmarkButton;
     private boolean mAddBookmark;
-    private static final String BOOKMARK_STATE = "bookmarkState";
-
-    private static final String TAG_DEBUG = "Lexy";
 
 
     public TranslaterFragment() {
         // Required empty public constructor
+    }
+
+    /**
+     * Returns a new instance of this fragment for the given section
+     * number.
+     */
+    public static TranslaterFragment newInstance(int sectionNumber) {
+        TranslaterFragment fragment = new TranslaterFragment();
+//        Bundle args = new Bundle();
+//        args.putInt(ARG_SECTION_NUMBER, sectionNumber);
+//        fragment.setArguments(args);
+        return fragment;
     }
 
     @Override
@@ -61,10 +71,10 @@ public class TranslaterFragment extends Fragment {
         Log.i(TAG_DEBUG, "onCreateView");
 
         View view = inflater.inflate(R.layout.fragment_translater, container, false);
-        sourceWordTextView = (EditText)view.findViewById(R.id.source_word);
-        translatedWordTextView = (EditText)view.findViewById(R.id.translated_word);
-        translatedWordTextViewDetail = (EditText)view.findViewById(R.id.translated_word_detail);
-        mBookmarkButton = (ImageView)view.findViewById(R.id.btn_bookmark);
+        sourceWordTextView = view.findViewById(R.id.source_word);
+        translatedWordTextView = view.findViewById(R.id.translated_word);
+        translatedWordTextViewDetail = view.findViewById(R.id.translated_word_detail);
+        mBookmarkButton = view.findViewById(R.id.btn_bookmark);
 
 //        setRetainInstance(true);
         // В случае использования FragmentStatePagerAdapter этот кусок нужно использовать
@@ -75,7 +85,7 @@ public class TranslaterFragment extends Fragment {
         setBookmark(mAddBookmark);
 
 
-        Button mTranslateButton = (Button)view.findViewById(R.id.btn_translate);
+        Button mTranslateButton = view.findViewById(R.id.btn_translate);
         mTranslateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -91,7 +101,7 @@ public class TranslaterFragment extends Fragment {
         });
 
 
-        ImageButton mClearButton = (ImageButton)view.findViewById(R.id.btn_clear);
+        ImageButton mClearButton = view.findViewById(R.id.btn_clear);
         mClearButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -122,7 +132,7 @@ public class TranslaterFragment extends Fragment {
                 setBookmark(true);
 
                 FragmentManager fm = getActivity().getSupportFragmentManager();
-                List<Fragment> listFragments= fm.getFragments();
+                List<Fragment> listFragments = fm.getFragments();
 
                 if (listFragments != null) {
                     Fragment fragment = listFragments.get(1);
@@ -134,7 +144,7 @@ public class TranslaterFragment extends Fragment {
         });
 
 
-        ImageView mEditButton = (ImageView)view.findViewById(R.id.btn_edit);
+        ImageView mEditButton = view.findViewById(R.id.btn_edit);
         mEditButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -149,10 +159,8 @@ public class TranslaterFragment extends Fragment {
         });
 
 
-
         return view;
     }
-
 
     private void setBookmark(boolean newState) {
         mAddBookmark = newState;
@@ -224,18 +232,6 @@ public class TranslaterFragment extends Fragment {
         Log.i(TAG_DEBUG, "onDetach");
     }
 
-    /**
-     * Returns a new instance of this fragment for the given section
-     * number.
-     */
-    public static TranslaterFragment newInstance(int sectionNumber) {
-        TranslaterFragment fragment = new TranslaterFragment();
-//        Bundle args = new Bundle();
-//        args.putInt(ARG_SECTION_NUMBER, sectionNumber);
-//        fragment.setArguments(args);
-        return fragment;
-    }
-
     public void setTrans(String str) {
         translatedWordTextView.setText(str);
     }
@@ -271,7 +267,6 @@ public class TranslaterFragment extends Fragment {
 //            Log.d("test____!!!", translatedWord);
         }
     }
-
 
 
 }

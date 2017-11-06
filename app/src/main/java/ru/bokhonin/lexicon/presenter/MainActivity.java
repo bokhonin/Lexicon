@@ -1,6 +1,8 @@
 package ru.bokhonin.lexicon.presenter;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -9,10 +11,10 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import ru.bokhonin.lexicon.R;
-import android.widget.Toast;
-
-import java.util.List;
+import ru.bokhonin.lexicon.R.anim.*;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -32,12 +34,14 @@ public class MainActivity extends AppCompatActivity {
     private ViewPager mViewPager;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)  {
+    protected void onCreate(Bundle savedInstanceState) {
 
 //        Toast.makeText(this, "onCreate - MainActivity", Toast.LENGTH_SHORT).show();
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        PreferenceManager.setDefaultValues(this, R.xml.settings, false);
 
 //        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 //        setSupportActionBar(toolbar);
@@ -79,6 +83,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+//        Animation animRotateIn_icon = AnimationUtils.loadAnimation(this, R.anim.rotate);
+//        mViewPager.startAnimation(animRotateIn_icon);
+
     }
 
     @Override
@@ -97,21 +104,29 @@ public class MainActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            Intent intent = new Intent(this, SettingsActivity.class);
+            startActivity(intent);
+            return true;
+        } else if (id == R.id.action_statistics) {
+            Intent intent = new Intent(this, StatisticActivity.class);
+            startActivity(intent);
             return true;
         }
+
+
 
         return super.onOptionsItemSelected(item);
     }
 
-      /**
+    /**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
      * one of the sections/tabs/pages. (FragmentStatePagerAdapter)
      */
-    public static class SectionsPagerAdapter extends FragmentPagerAdapter{
+    public static class SectionsPagerAdapter extends FragmentPagerAdapter {
 
-          public SectionsPagerAdapter(FragmentManager fm) {
-              super(fm);
-          }
+        public SectionsPagerAdapter(FragmentManager fm) {
+            super(fm);
+        }
 
 
         @Override

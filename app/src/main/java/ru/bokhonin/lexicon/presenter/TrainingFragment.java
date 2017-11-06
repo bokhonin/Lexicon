@@ -5,12 +5,6 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.view.ViewPager;
-import android.support.v7.widget.DividerItemDecoration;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,14 +15,12 @@ import ru.bokhonin.lexicon.R;
 import ru.bokhonin.lexicon.model.TranslationWord;
 import ru.bokhonin.lexicon.model.Vocabulary;
 
-import java.util.Date;
-import java.util.List;
 import java.util.UUID;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class TrainingFragment extends Fragment{
+public class TrainingFragment extends Fragment {
 
     private TextView word;
     private TextView lang;
@@ -43,11 +35,21 @@ public class TrainingFragment extends Fragment{
         // Required empty public constructor
     }
 
+    public static TrainingFragment newInstance(UUID id) {
+        Bundle args = new Bundle();
+        args.putSerializable("testing", id);
+
+        TrainingFragment fragment = new TrainingFragment();
+        fragment.setArguments(args);
+
+        return fragment;
+    }
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        UUID id = (UUID)getArguments().getSerializable("testing");
+        UUID id = (UUID) getArguments().getSerializable("testing");
         translationWord = Vocabulary.get(getActivity()).getTranslationWord(id);
     }
 
@@ -61,21 +63,20 @@ public class TrainingFragment extends Fragment{
 
         View view = inflater.inflate(R.layout.fragment_training, container, false);
 
-        word = (TextView)view.findViewById(R.id.training_word);
+        word = view.findViewById(R.id.training_word);
         word.setText(translationWord.getEnWord());
 
-        lang = (TextView)view.findViewById(R.id.lang);
+        lang = view.findViewById(R.id.lang);
         setLang(mVisibleEnWord);
 
-        ImageView imageEye = (ImageView)view.findViewById(R.id.image_eye);
+        ImageView imageEye = view.findViewById(R.id.image_eye);
         imageEye.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (mVisibleEnWord) {
                     word.setText(translationWord.getRuWord());
                     mVisibleEnWord = false;
-                }
-                else {
+                } else {
                     word.setText(translationWord.getEnWord());
                     mVisibleEnWord = true;
                 }
@@ -84,7 +85,7 @@ public class TrainingFragment extends Fragment{
         });
 
 
-        imageSmile = (ImageView)view.findViewById(R.id.image_smile);
+        imageSmile = view.findViewById(R.id.image_smile);
         imageSmile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -96,7 +97,7 @@ public class TrainingFragment extends Fragment{
             }
         });
 
-        imageSadSmile = (ImageView)view.findViewById(R.id.image_sad_smile);
+        imageSadSmile = view.findViewById(R.id.image_sad_smile);
         imageSadSmile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -109,8 +110,6 @@ public class TrainingFragment extends Fragment{
         });
 
         return view;
-
-
 
 
 //        Button button = (Button)view.findViewById(R.id.button);
@@ -129,16 +128,15 @@ public class TrainingFragment extends Fragment{
 //
 //            }
 //        });
-        
-        
+
+
     }
 
     private void setLang(boolean visibleEnWord) {
         if (visibleEnWord) {
             lang.setText("En");
             lang.setTextColor(Color.parseColor("#03a9f4"));
-        }
-        else {
+        } else {
             lang.setText("Ru");
             lang.setTextColor(Color.parseColor("#43a047"));
 //            word.setTextColor(Color.parseColor("#43a047"));
@@ -151,22 +149,6 @@ public class TrainingFragment extends Fragment{
 
 //        TextView text1 = (TextView)getActivity().findViewById(R.id.text1);
 //        text1.setText(mTranslationWord.getEnWord());
-    }
-
-
-
-
-
-
-
-    public static TrainingFragment newInstance(UUID id) {
-        Bundle args = new Bundle();
-        args.putSerializable("testing", id);
-
-        TrainingFragment fragment = new TrainingFragment();
-        fragment.setArguments(args);
-
-        return fragment;
     }
 
 

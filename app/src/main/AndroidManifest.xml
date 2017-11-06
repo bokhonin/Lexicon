@@ -22,7 +22,19 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".presenter.TrainingActivity">
+        <activity
+                android:name=".presenter.TrainingActivity"
+                android:label="Карточки">
+        </activity>
+        <activity
+                android:name=".presenter.SettingsActivity"
+                android:label="Настройки">
+        </activity>
+        <activity
+                android:name=".presenter.StatisticActivity"
+                android:label="Статистика">
+        </activity>
+        <activity android:name=".presenter.DetailActivity">
         </activity>
     </application>
 

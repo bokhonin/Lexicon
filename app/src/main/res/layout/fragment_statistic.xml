@@ -1,0 +1,71 @@
+<LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
+>
+
+    <TextView
+            android:id="@+id/amount_words"
+            style="@style/StatisticText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/hello_blank_fragment"
+            android:layout_margin="8dp"
+    />
+
+    <TextView
+            android:id="@+id/amount_words_0"
+            style="@style/StatisticText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/hello_blank_fragment"
+            android:layout_margin="8dp"
+    />
+
+    <TextView
+            android:id="@+id/amount_words_1"
+            style="@style/StatisticText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/hello_blank_fragment"
+            android:layout_margin="8dp"
+    />
+
+    <TextView
+        android:id="@+id/amount_words_2"
+        style="@style/StatisticText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/hello_blank_fragment"
+        android:layout_margin="8dp"
+    />
+
+    <TextView
+        android:id="@+id/amount_words_3"
+        style="@style/StatisticText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/hello_blank_fragment"
+        android:layout_margin="8dp"
+    />
+
+    <TextView
+            android:id="@+id/amount_words_4"
+            style="@style/StatisticText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/hello_blank_fragment"
+            android:layout_margin="8dp"
+    />
+
+    <TextView
+            android:id="@+id/amount_words_5"
+            style="@style/StatisticText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/hello_blank_fragment"
+            android:layout_margin="8dp"
+    />
+
+</LinearLayout>

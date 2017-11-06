@@ -6,32 +6,23 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.app.AppCompatActivity;
-import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.View.OnLongClickListener;
 import android.view.ViewGroup;
-import android.view.animation.LinearInterpolator;
-import android.widget.Adapter;
 import android.widget.TextView;
 import android.widget.Toast;
 import ru.bokhonin.lexicon.R;
 import ru.bokhonin.lexicon.model.TranslationWord;
 import ru.bokhonin.lexicon.model.Vocabulary;
-import ru.bokhonin.lexicon.presenter.TrainingActivity;
 
 import java.util.List;
 import java.util.UUID;
@@ -39,19 +30,25 @@ import java.util.UUID;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class VocabularyFragment extends Fragment{
-    private RecyclerView mRecyclerView;
-    private Adapter mAdapter;
-
+public class VocabularyFragment extends Fragment {
     private static final String DIALOG_DEL = "ru.bokhonin.lexicon.dialog_del";
     private static final int REQUEST_DEL = 0;
-
     private static final String TAG_DEBUG = "Lexy";
+    private RecyclerView mRecyclerView;
+    private Adapter mAdapter;
 
     public VocabularyFragment() {
         // Required empty public constructor
     }
 
+    /**
+     * Returns a new instance of this fragment for the given section
+     * number.
+     */
+    public static VocabularyFragment newInstance(int sectionNumber) {
+        VocabularyFragment fragment = new VocabularyFragment();
+        return fragment;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -63,17 +60,18 @@ public class VocabularyFragment extends Fragment{
 
         View view = inflater.inflate(R.layout.fragment_vocabulary, container, false);
 
-        FloatingActionButton fab = (FloatingActionButton)view.findViewById(R.id.fab);
+        FloatingActionButton fab = view.findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), TrainingActivity.class);
                 startActivity(intent);
+                getActivity().overridePendingTransition(R.anim.diagonaltranslate, R.anim.alpha);
             }
         });
 
 
-        mRecyclerView = (RecyclerView)view.findViewById(R.id.vocabulary_recycler_view);
+        mRecyclerView = view.findViewById(R.id.vocabulary_recycler_view);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         //int sectionNumber = (int)getArguments().getSerializable(ARG_SECTION_NUMBER);
@@ -83,79 +81,13 @@ public class VocabularyFragment extends Fragment{
         return view;
     }
 
-
-
-
-
-    /**
-     * Returns a new instance of this fragment for the given section
-     * number.
-     */
-    public static VocabularyFragment newInstance(int sectionNumber) {
-        VocabularyFragment fragment = new VocabularyFragment();
-        return fragment;
-    }
-
-
-    private class Holder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener{
-        private TranslationWord mTranslationWord;
-
-        private TextView mWordTextView;
-        private TextView mTranslationTextView;
-        private TextView mUploadDate;
-        private TextView mTag;
-
-        public Holder(LayoutInflater inflater, ViewGroup parent) {
-            super(inflater.inflate(R.layout.list_item_trans_word, parent, false));
-            itemView.setOnClickListener(this);
-            itemView.setOnLongClickListener(this);
-
-            mWordTextView = (TextView)itemView.findViewById(R.id.word);
-            mTranslationTextView = (TextView)itemView.findViewById(R.id.translation);
-            mUploadDate = (TextView)itemView.findViewById(R.id.uploadDate);
-            mTag = (TextView)itemView.findViewById(R.id.tag);
-        }
-
-        public void bind(TranslationWord transWord) {
-            mTranslationWord = transWord;
-            mWordTextView.setText(mTranslationWord.getEnWord());
-            mTranslationTextView.setText(mTranslationWord.getRuWord());
-            mUploadDate.setText(mTranslationWord.getDateUploadFormat());
-
-//            mTag.setText(mTranslationWord.getStatusLearningString());
-//            mTag.setBackground(getResources().getDrawable(R.drawable.rectangle_tag, null));
-            setStatusTranslationWord(mTag, mTranslationWord);
-        }
-
-        @Override
-        public void onClick(View view) {
-            Toast.makeText(getActivity(), this.mTranslationWord.getEnWord(), Toast.LENGTH_SHORT).show();
-//            Intent intent = CrimePagerActivity.newIntent(getActivity(), mCrime.getId());
-//            startActivity(intent);
-        }
-
-        @Override
-        public boolean onLongClick(View view) {
-//            Toast.makeText(getActivity(), this.mTranslationWord.getEnWord(), Toast.LENGTH_SHORT).show();
-
-            FragmentManager manager = getFragmentManager();
-            DialogVocabList dialog = DialogVocabList.newInstance(this.mTranslationWord.getUUID(), this.getLayoutPosition());
-
-            dialog.setTargetFragment(VocabularyFragment.this, REQUEST_DEL);
-
-            dialog.show(manager, DIALOG_DEL);
-
-            return true;
-        }
-    }
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode != Activity.RESULT_OK) return;
 
         if (requestCode == REQUEST_DEL) {
-            UUID id = (UUID)data.getSerializableExtra(DialogVocabList.ARG_ID);
-            int position = (int)data.getSerializableExtra(DialogVocabList.ARG_POS);
+            UUID id = (UUID) data.getSerializableExtra(DialogVocabList.ARG_ID);
+            int position = (int) data.getSerializableExtra(DialogVocabList.ARG_POS);
 
             // Удалим слово из списка
             Vocabulary vocab = Vocabulary.get(getActivity());
@@ -172,46 +104,6 @@ public class VocabularyFragment extends Fragment{
             Snackbar.make(getActivity().findViewById(R.id.vocabulary_recycler_view), "Слово удалено!", Snackbar.LENGTH_LONG).setAction("Action", null).show();
         }
     }
-
-    private class Adapter extends RecyclerView.Adapter<Holder> {
-        private List<TranslationWord> mTranslationWords;
-
-//        private final View.OnLongClickListener mLongClickListener;
-
-        public Adapter(List<TranslationWord> translationWords) {
-            mTranslationWords = translationWords;
-//            , View.OnLongClickListener longClickListener
-//            mLongClickListener = longClickListener;
-        }
-
-        @Override
-        public Holder onCreateViewHolder(ViewGroup parent, int viewType) {
-            LayoutInflater layoutInflater = LayoutInflater.from(getActivity());
-
-            return new Holder(layoutInflater, parent);
-        }
-
-        @Override
-        public void onBindViewHolder(Holder holder, int position) {
-            TranslationWord translationWord = mTranslationWords.get(position);
-            holder.bind(translationWord);
-        }
-
-        @Override
-        public int getItemCount() {
-            return mTranslationWords.size();
-        }
-
-        @Override
-        public void onAttachedToRecyclerView(RecyclerView recyclerView) {
-            super.onAttachedToRecyclerView(recyclerView);
-        }
-
-        public void setTranslationWords(List<TranslationWord> translationWords) {
-            mTranslationWords = translationWords;
-        }
-    }
-
 
     public void updateUI() {
         Vocabulary vocab = Vocabulary.get(getActivity());
@@ -239,14 +131,12 @@ public class VocabularyFragment extends Fragment{
         );
 
 
-
         if (mAdapter == null) {
             mAdapter = new Adapter(translationWords);
             mRecyclerView.setAdapter(mAdapter);
 
 //            Toast.makeText(getActivity(), "in updateUI 1", Toast.LENGTH_SHORT).show();
-        }
-        else {
+        } else {
 //            Toast.makeText(getActivity(), "in updateUI 2", Toast.LENGTH_SHORT).show();
 
             mAdapter.setTranslationWords(translationWords);
@@ -277,18 +167,11 @@ public class VocabularyFragment extends Fragment{
         } else if (status == 5) {
             text = "⋆ выучено";
             draw = R.drawable.rectangle_tag5;
-        };
+        }
 
         tag.setText(text);
         tag.setBackground(getResources().getDrawable(draw, null));
     }
-
-
-
-
-
-
-
 
     @Override
     public void onStart() {
@@ -343,5 +226,106 @@ public class VocabularyFragment extends Fragment{
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         Log.i(TAG_DEBUG, "onViewCreated-VocFrag");
         super.onViewCreated(view, savedInstanceState);
+    }
+
+    private class Holder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
+        private TranslationWord mTranslationWord;
+
+        private TextView mWordTextView;
+        private TextView mTranslationTextView;
+        private TextView mUploadDate;
+        private TextView mTag;
+
+        public Holder(LayoutInflater inflater, ViewGroup parent) {
+            super(inflater.inflate(R.layout.list_item_trans_word, parent, false));
+            itemView.setOnClickListener(this);
+            itemView.setOnLongClickListener(this);
+
+            mWordTextView = itemView.findViewById(R.id.word);
+            mTranslationTextView = itemView.findViewById(R.id.translation);
+            mUploadDate = itemView.findViewById(R.id.uploadDate);
+            mTag = itemView.findViewById(R.id.tag);
+        }
+
+        public void bind(TranslationWord transWord) {
+            mTranslationWord = transWord;
+            mWordTextView.setText(mTranslationWord.getEnWord());
+            mTranslationTextView.setText(mTranslationWord.getRuWord());
+            mUploadDate.setText(mTranslationWord.getDateUploadFormat());
+
+//            mTag.setText(mTranslationWord.getStatusLearningString());
+//            mTag.setBackground(getResources().getDrawable(R.drawable.rectangle_tag, null));
+            setStatusTranslationWord(mTag, mTranslationWord);
+        }
+
+        @Override
+        public void onClick(View view) {
+//            Toast.makeText(getActivity(), this.mTranslationWord.getEnWord(), Toast.LENGTH_SHORT).show();
+
+            Intent intent = new Intent(getActivity(), DetailActivity.class);
+            intent.putExtra(DetailFragment.EXTRA_ID, mTranslationWord.getUUID());
+            startActivity(intent);
+
+
+//            Intent intent = new Intent(packageContext, CrimePagerActivity.class);
+//            intent.putExtra(EXTRA_CRIME_ID, crimeId);
+
+
+//            Intent intent = CrimePagerActivity.newIntent(getActivity(), mCrime.getId());
+//            startActivity(intent);
+        }
+
+        @Override
+        public boolean onLongClick(View view) {
+//            Toast.makeText(getActivity(), this.mTranslationWord.getEnWord(), Toast.LENGTH_SHORT).show();
+
+            FragmentManager manager = getFragmentManager();
+            DialogVocabList dialog = DialogVocabList.newInstance(this.mTranslationWord.getUUID(), this.getLayoutPosition());
+
+            dialog.setTargetFragment(VocabularyFragment.this, REQUEST_DEL);
+
+            dialog.show(manager, DIALOG_DEL);
+
+            return true;
+        }
+    }
+
+    private class Adapter extends RecyclerView.Adapter<Holder> {
+        private List<TranslationWord> mTranslationWords;
+
+//        private final View.OnLongClickListener mLongClickListener;
+
+        public Adapter(List<TranslationWord> translationWords) {
+            mTranslationWords = translationWords;
+//            , View.OnLongClickListener longClickListener
+//            mLongClickListener = longClickListener;
+        }
+
+        @Override
+        public Holder onCreateViewHolder(ViewGroup parent, int viewType) {
+            LayoutInflater layoutInflater = LayoutInflater.from(getActivity());
+
+            return new Holder(layoutInflater, parent);
+        }
+
+        @Override
+        public void onBindViewHolder(Holder holder, int position) {
+            TranslationWord translationWord = mTranslationWords.get(position);
+            holder.bind(translationWord);
+        }
+
+        @Override
+        public int getItemCount() {
+            return mTranslationWords.size();
+        }
+
+        @Override
+        public void onAttachedToRecyclerView(RecyclerView recyclerView) {
+            super.onAttachedToRecyclerView(recyclerView);
+        }
+
+        public void setTranslationWords(List<TranslationWord> translationWords) {
+            mTranslationWords = translationWords;
+        }
     }
 }

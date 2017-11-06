@@ -1,22 +1,17 @@
 package ru.bokhonin.lexicon.presenter;
 
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 import ru.bokhonin.lexicon.R;
 import ru.bokhonin.lexicon.model.TranslationWord;
 import ru.bokhonin.lexicon.model.Vocabulary;
 
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 
 public class TrainingActivity extends AppCompatActivity {
 
@@ -42,7 +37,7 @@ public class TrainingActivity extends AppCompatActivity {
         setContentView(R.layout.activity_training_pager);
 
 
-        mViewPager = (ViewPager)findViewById(R.id.training_view_pager);
+        mViewPager = (ViewPager) findViewById(R.id.training_view_pager);
 
 //        Vocabulary vocab = Vocabulary.get(this);
 //        mTranslationWords = vocab.getVocabulary();
@@ -55,7 +50,8 @@ public class TrainingActivity extends AppCompatActivity {
 //        }
 
         Vocabulary vocab = Vocabulary.get(this);
-        translationWordsForTraining = vocab.getTranslationWordsForTraining();
+        translationWordsForTraining = vocab.getWordsForTraining(TrainingActivity.this);
+
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         mViewPager.setAdapter(new FragmentStatePagerAdapter(fragmentManager) {
@@ -93,7 +89,6 @@ public class TrainingActivity extends AppCompatActivity {
         setNumberPage(0);
 
 
-
 //        TextView button = (TextView)findViewById(R.id.text1);
 //        button.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -112,9 +107,6 @@ public class TrainingActivity extends AppCompatActivity {
 //        });
 
 
-
-
-
 //        for (int i = 0; i < mCrimes.size(); i++) {
 //            if (mTranslationWords.get(i).getUUID().equals(crimeId)) {
 //                mViewPager.setCurrentItem(i);
@@ -123,17 +115,17 @@ public class TrainingActivity extends AppCompatActivity {
 //        }
 
 
-
-
     }
 
     private void setNumberPage(int position) {
-        TextView text1 = (TextView)TrainingActivity.this.findViewById(R.id.text1);
+        TextView text1 = (TextView) TrainingActivity.this.findViewById(R.id.text1);
 
         int size = mViewPager.getAdapter().getCount();
 
         String str = new Integer(position + 1).toString() + " / " + new Integer(size).toString();
         text1.setText(str);
     }
+
+
 
 }

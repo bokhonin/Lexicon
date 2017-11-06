@@ -2,8 +2,10 @@ package ru.bokhonin.lexicon.model;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 
 import java.util.ArrayList;
@@ -81,22 +83,28 @@ public class Vocabulary {
         return translationWords;
     }
 
-    public List<TranslationWord> getTranslationWordsForTraining() {
+    public List<TranslationWord> getWordsForTraining(Context context) {
 
         List<TranslationWord> translationWords = getVocabulary();
         List<TranslationWord> translationWordsForTraining = new ArrayList<>();
 
-        int numWords = 20;
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+
+        String w = prefs.getString("num_words", "10");
+        int numWords = Integer.parseInt(w);
+
         int sizeVocabulary = translationWords.size();
 
         Random rand = new Random();
-        for (int i = 0; i < 20; i++) {
-            TranslationWord transWord = translationWords.get(rand.nextInt(sizeVocabulary) + 1);
+        for (int i = 0; i < numWords; i++) {
+            TranslationWord transWord = translationWords.get(rand.nextInt(sizeVocabulary));
+
             translationWordsForTraining.add(transWord);
         }
 
         return translationWordsForTraining;
     }
+
 
     public void addTranslationWord(TranslationWord translationWord) {
 //        mTranslationWords.add(translationWord);
@@ -120,6 +128,29 @@ public class Vocabulary {
 
         mDatabase.delete(DbSchema.TranslatedWordTable.NAME,DbSchema.TranslatedWordTable.Cols.UUID + " = ?", new String[] {uuidString});
 
+    }
+
+
+    public static int getSizeVocabulary(Context context) {
+        Vocabulary voc = Vocabulary.get(context);
+        List<TranslationWord> translationWords = voc.getVocabulary();
+
+        return translationWords.size();
+    }
+
+    public static int getSizeTypeWords(Context context, int type) {
+        Vocabulary voc = Vocabulary.get(context);
+        List<TranslationWord> translationWords = voc.getVocabulary();
+
+        int amount = 0;
+
+        for (int i = 0; i < translationWords.size(); i++) {
+            if (translationWords.get(i).getStatusLearning() == type) {
+                amount++;
+            }
+        }
+
+        return amount;
     }
 
     @NonNull
